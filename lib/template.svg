@@ -10,9 +10,7 @@
     <!--Triangle-->
     <polygon points="200,10 250,190 160,210" style="fill:lime;stroke:purple; stroke-width:1" />
     <!--Text-->
-    <g font-size="" font-family="sans-serif" fill=:colour stroke='none' text-anchor="middle">
-    <text x='', y='', dx=''>A</text>
-    </g>
+    
     </svg>
 </body>
 </html>

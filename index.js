@@ -8,14 +8,22 @@ const Triangle = require('./lib/triangle.js');
 const questions = [{
     type: 'input',
     name: 'text',
-    message: 'Please enter the text you would like in your logo. This can be up to 3 characters long.'
+    message: 'Please enter the text you would like in your logo. This can be up to 3 characters long.',
+    validate(answer) {
+        if(answer.length > 3) {
+            return "The text can only be a maximum length of 3 Characters.";
+        } else {
+            return true;
+        }
+    }
+
 },{
     type: 'input',
-    name: 'text-colour',
+    name: 'textcolour',
     message: 'What colour would you like the text in your logo to be? This can be a colour keyword or a hexidecimal number(#123456)'
 },{
     type: 'input',
-    name: 'shape-colour',
+    name: 'shapecolour',
     message: 'What colour would you like your logo background to be? This can be a colour keyword or a hexidecimal number(#123456)'
 },{
     type: 'list',
@@ -34,10 +42,23 @@ const questions = [{
 
 inquirer.prompt(questions)
 .then((data) => {
-    const filename = `logo.svg`;
-    const saveLocation = data.filepath;
-    let fileData = `<DOCTYPE html> \n <html> \n <body> \n <svg>`
-
-
+    const {text, textcolour, shapecolour, shape, filepath} = data;
+    
+    switch (shape) {
+        case 'Circle':
+            const logo1 = new Circle(text, textcolour, shapecolour, shape, filepath); 
+            logo1.render(filepath);
+            break;
+        case 'Triangle':
+            const logo2 = new Triangle(text, textcolour, shapecolour, shape, filepath)
+            logo2.render(filepath)
+            break;
+        case 'Square':
+            const logo3 = new Square(text, textcolour, shapecolour, shape, filepath);
+            logo3.render(filepath);
+            break;
+        default:
+            break;
+    } 
     
 });
