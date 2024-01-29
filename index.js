@@ -1,5 +1,6 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
+const validateColor = require('validate-color').default;
 inquirer.registerPrompt('directory', require('inquirer-select-directory'));
 const Circle = require('./lib/circle.js');
 const Square = require('./lib/square.js');
@@ -20,11 +21,29 @@ const questions = [{
 },{
     type: 'input',
     name: 'textcolour',
-    message: 'What colour would you like the text in your logo to be? This can be a colour keyword or a hexidecimal number(#123456)'
+    message: 'What colour would you like the text in your logo to be? This can be a colour keyword or a hexidecimal number(#123456)',
+    validate(answer) {
+       const colorKey = validateColor(answer);
+        if (colorKey == false) {
+            // throw new Error('Invalid color or hexidecimal color code.');
+            return 'Invalid color or hexidecimal color code.';
+        } else {
+            return true;
+        }
+    }
 },{
     type: 'input',
     name: 'shapecolour',
-    message: 'What colour would you like your logo background to be? This can be a colour keyword or a hexidecimal number(#123456)'
+    message: 'What colour would you like your logo background to be? This can be a colour keyword or a hexidecimal number(#123456)',
+    validate(answer) {
+        const colorKey = validateColor(answer);
+         if (colorKey == false) {
+             // throw new Error('Invalid color or hexidecimal color code.');
+             return 'Invalid color or hexidecimal color code.';
+         } else {
+             return true;
+         }
+     }
 },{
     type: 'list',
     name: 'shape',
@@ -46,19 +65,16 @@ inquirer.prompt(questions)
     
     switch (shape) {
         case 'Circle':
-            const logo1 = new Circle(text, textcolour, shapecolour, shape, filepath); 
-            logo1.render(filepath);
+            const circle = new Circle(text, textcolour, shapecolour, shape, filepath); 
+            circle.render(filepath);
             break;
         case 'Triangle':
-            const logo2 = new Triangle(text, textcolour, shapecolour, shape, filepath)
-            logo2.render(filepath)
+            const triangle = new Triangle(text, textcolour, shapecolour, shape, filepath)
+            triangle.render(filepath)
             break;
         case 'Square':
-            const logo3 = new Square(text, textcolour, shapecolour, shape, filepath);
-            logo3.render(filepath);
-            break;
-        default:
+            const square = new Square(text, textcolour, shapecolour, shape, filepath);
+            square.render(filepath);
             break;
     } 
-    
 });
